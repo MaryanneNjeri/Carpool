@@ -20,8 +20,11 @@ class CustomProfile(models.Model):
     def __str__(self):
         return self.username
 
-    #@receiver(post_save, sender=User)
-    #def update_user_profile(sender, instance, created, **kwargs):
-        #if created:
-            #CustomProfile.objects.create(user=instance)
-        #instance.profile.save()
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            CustomProfile.objects.create(user=instance)
+        instance.profile.save()
+'''
+we create a passenger model that saves information when the driver is reviewing a certain Passenger
+'''

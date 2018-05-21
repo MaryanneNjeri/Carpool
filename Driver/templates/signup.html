@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+{% load static %}
+{% block styles %}
+{% bootstrap_css %}
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container">
+<h1 style="font-family: 'Raleway', sans-serif;">Signup</h1>
+
+ <form  action="{%url 'signup' %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-warning btn-lg" value="sign up">
+  </form>
+
+
+</div>
+
+{%endblock%}
