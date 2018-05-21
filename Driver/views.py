@@ -4,7 +4,7 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
-
+from .models import Profile
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -28,4 +28,9 @@ def signup(request):
 @login_required(login_url='/accounts/login')
 def landing (request):
     title='welcome driver'
-    return render (request,'Driver/landing.html',{"title":title})
+    profile=Profile.objects.get(user=request.user)
+    return render (request,'Driver/landing.html',{"title":title,"profile":profile})
+
+def profile(request,profile_id):
+    current_profile=Profile.objects.get(id=profile_id)
+    return render(request,'Driver/profile.html',{"current_profile":current_profile})
