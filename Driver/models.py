@@ -32,7 +32,7 @@ class Car(models.Model):
     car_brand=models.CharField(max_length=30)
     Number_plate=models.CharField(max_length=40)
     seats_available=models.IntegerField(max_length=40)
-
+    users_car=models.ForeignKey(User,null=True)
 '''
 we create a driver model to save information of the driver and the car
 '''
