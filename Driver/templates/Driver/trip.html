@@ -1,0 +1,22 @@
+{%extends 'Driver/baseprofile.html'%}
+{% load bootstrap3 %}
+{% load static %}
+{% block styles %}
+{% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css'%}">
+{% endblock %}
+{% block content %}
+<div class="container">
+<h1>Add a Trip</h1>
+
+ <form  action="{%url 'Trip' current_profile.id %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-warning btn-lg" value="Post">
+  </form>
+
+
+</div>
+
+{%endblock%}
