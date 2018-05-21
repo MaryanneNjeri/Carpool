@@ -29,12 +29,11 @@ class Profile(models.Model):
 we create a driver model to save information of the driver and the car
 '''
 class Driver(models.Model):
-    name=models.CharField(max_length=40)
     start=models.CharField(max_length=40)
     destination=models.CharField(max_length=30)
 '''
 we create a car model to save information about the car as users may have prefrences
-'''  
+'''
 class Car(models.Model):
     car_brand=models.CharField(max_length=30)
     Number_plate=models.CharField(max_length=40)

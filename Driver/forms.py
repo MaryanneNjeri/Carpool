@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from .models import Profile,Driver,Car
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 '''
@@ -18,3 +18,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name','last_name','email','username','profile_image','sex','user_type' ,'password1', 'password2')
+class DriverForm(forms.ModelForm):
+    class Meta:
+        model=Driver
+        fields=['start','destination']
+class CarForm(form.ModelForm):
+    class Meta:
+        model=Car
+        fields=['car_brand','seats_available','Number_plate']        
