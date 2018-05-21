@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http  import HttpResponse
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm
+from .forms import SignUpForm,DriverForm,CarForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 # Create your views here.
@@ -34,3 +34,13 @@ def landing (request):
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     return render(request,'Driver/profile.html',{"current_profile":current_profile})
+def car(request,profile_id):
+    current_profile=Profile.objects.get(id=profile_id)
+    form=CarForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return reditect (profile,request.user.id)
+    else:
+        form=CarForm()
+    return render(request,'Driver/car.html',{"form":form},"current_profile":current_profile)    
