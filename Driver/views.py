@@ -19,9 +19,9 @@ def signup(request):
             raw_password=form.cleaned_data.get('password1')
             user=authenticate(username=user.username,password=raw_password)
             login(request, user)
-        else:
-            form=SignUpForm()
-        return render(request,'signup.html'.{"form":form})    
+    else:
+        form=SignUpForm()
+    return render (request,'signup.html',{"form":form})
 def landing (request):
     title='welcome driver'
     return render (request,'Driver/landing.html',{"title":title})

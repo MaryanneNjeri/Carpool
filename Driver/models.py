@@ -9,7 +9,7 @@ from django.dispatch import receiver
 we create a profile class that will help us save information on whether the user is a
 a user or a driver
 '''
-class CustomProfile(models.Model):
+class Profile(models.Model):
     username=models.CharField(max_length=40)
     profile_image=models.ImageField(upload_to='profiles/')
     choices=(('Male','Male'),('Female','Female'))
@@ -23,7 +23,7 @@ class CustomProfile(models.Model):
     @receiver(post_save, sender=User)
     def update_user_profile(sender, instance, created, **kwargs):
         if created:
-            CustomProfile.objects.create(user=instance)
+            Profile.objects.create(user=instance)
         instance.profile.save()
 '''
 we create a passenger model that saves information when the driver is reviewing a certain Passenger
