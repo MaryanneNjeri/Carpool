@@ -12,8 +12,20 @@
 {% block content %}
 <div class="container">
 <h1>Welcome driver</h1>
+<div class="row">
+  <div class="col-md-8">
+
+      <img src="{{current_profile.profile_image.url}}" class="img-reponsive"style="width:35%;height:35%;" alt="Image">
+      <br>
 
 </div>
+<div class="col-md-4">
+  <h3>Name:{{current_profile.username}}</h3>
+  <h3>Type:{{current_profile.user_type}}</h3>
+</div>
+</div>
+</div>
+<hr>
 {% endblock %}
 {% block scripts %}
 
