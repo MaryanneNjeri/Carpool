@@ -22,7 +22,7 @@ class DriverForm(forms.ModelForm):
     class Meta:
         model=Driver
         fields=['start','destination']
-class CarForm(form.ModelForm):
+class CarForm(forms.ModelForm):
     class Meta:
         model=Car
-        fields=['car_brand','seats_available','Number_plate']        
+        fields=['car_brand','seats_available','Number_plate']

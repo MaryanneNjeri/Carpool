@@ -31,6 +31,7 @@ we create a driver model to save information of the driver and the car
 class Driver(models.Model):
     start=models.CharField(max_length=40)
     destination=models.CharField(max_length=30)
+    user=models.ForeignKey(User,null=True)
 '''
 we create a car model to save information about the car as users may have prefrences
 '''
