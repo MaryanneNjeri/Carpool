@@ -3,6 +3,7 @@ from django.http  import HttpResponse
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def signup(request):
@@ -18,10 +19,13 @@ def signup(request):
             user.save()
             raw_password=form.cleaned_data.get('password1')
             user=authenticate(username=user.username,password=raw_password)
+            return(landing)
             login(request, user)
+
     else:
         form=SignUpForm()
     return render (request,'signup.html',{"form":form})
+@login_required(login_url='/accounts/login')
 def landing (request):
     title='welcome driver'
     return render (request,'Driver/landing.html',{"title":title})
