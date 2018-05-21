@@ -42,5 +42,5 @@ we add the car foreign key to the driver model to save that the car belongs to t
 class Driver(models.Model):
     start=models.CharField(max_length=40)
     destination=models.CharField(max_length=30)
-    user=models.ForeignKey(User,null=True)
+    user=models.ForeignKey(Profile,null=True)
     car=models.ForeignKey(Car,null=True)

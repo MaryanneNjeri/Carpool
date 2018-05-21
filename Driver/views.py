@@ -43,4 +43,4 @@ def car(request,profile_id):
             return reditect (profile,request.user.id)
     else:
         form=CarForm()
-    return render(request,'Driver/car.html',{"form":form},"current_profile":current_profile)    
+    return render(request,'Driver/car.html',{"form":form,"current_profile":current_profile})    
