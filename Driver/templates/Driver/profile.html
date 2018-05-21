@@ -26,6 +26,20 @@
 </div>
 </div>
 <hr>
+<div class="container">
+  {%if trips.start %}
+  <h2>Trips that you created</h2>
+  <p>Start:{{trips.start}}</p>
+  <p>Destination:{{trips.start}}</p>
+  <p>Car:{{trips.car.car_brand}}</p>
+  <p>NumberPlate:{{trips.car.Number_plate}}</p>
+  <p>SeatsAvailable:{{trips.car.seats_available}}</p>
+
+  {% else %}
+  <h1>You haven't created any trips yet click create trip to create or add a trip</h1>
+  {% endif %}
+</div>
+
 {% endblock %}
 {% block scripts %}
 

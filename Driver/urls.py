@@ -8,7 +8,7 @@ urlpatterns=[
     url(r'^$',views.landing,name = 'Landing'),
     url(r'^signup/',views.signup,name='signup'),
     url(r'^profile/(\d+)',views.profile,name='Profile'),
-    #url(r'^trip/(\d+)',views.trip,name='Trip'),
+    url(r'^trip/(\d+)',views.trip,name='Trip'),
     url(r'^car/(\d+)',views.car,name='Car'),
 ]
 if settings.DEBUG:

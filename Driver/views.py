@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http  import HttpResponse
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm,DriverForm,CarForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile,Car,Driver
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -33,14 +33,29 @@ def landing (request):
 
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
-    return render(request,'Driver/profile.html',{"current_profile":current_profile})
+    trips=Driver.objects.get(id=profile_id)
+    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips})
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     form=CarForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return reditect (profile,request.user.id)
+            return redirect (profile,request.user.id)
     else:
         form=CarForm()
-    return render(request,'Driver/car.html',{"form":form,"current_profile":current_profile})    
+    return render(request,'Driver/car.html',{"form":form,"current_profile":current_profile})
+def trip(request,profile_id):
+    current_profile=Profile.objects.get(id=profile_id)
+    car_instance=Car.objects.get(id=profile_id)
+    form=DriverForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            driver=form.save(commit=False)
+            driver.profile=request.user
+            driver.car=car_instance
+            driver.save()
+            return redirect(profile,request.user.id)
+    else:
+        form=DriverForm()
+    return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
