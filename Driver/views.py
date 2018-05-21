@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
-from django.http  import HttpResponse
+from django.http  import HttpResponse,Http404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm,DriverForm,CarForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -33,7 +35,9 @@ def landing (request):
 
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
-    trips=Driver.objects.get(id=profile_id)
+    trips=Driver.objects.filter(user=current_profile)
+
+
     return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips})
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
@@ -52,7 +56,7 @@ def trip(request,profile_id):
     if request.method == 'POST':
         if form.is_valid():
             driver=form.save(commit=False)
-            driver.profile=request.user
+            driver.user=current_profile
             driver.car=car_instance
             driver.save()
             return redirect(profile,request.user.id)

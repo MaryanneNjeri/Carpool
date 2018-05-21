@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="container">
-<h1>Welcome driver</h1>
+<h2 class="text-center">Welcome driver</h2>
 <div class="row">
   <div class="col-md-8">
 
@@ -27,17 +27,21 @@
 </div>
 <hr>
 <div class="container">
-  {%if trips.start %}
-  <h2>Trips that you created</h2>
-  <p>Start:{{trips.start}}</p>
-  <p>Destination:{{trips.start}}</p>
-  <p>Car:{{trips.car.car_brand}}</p>
-  <p>NumberPlate:{{trips.car.Number_plate}}</p>
-  <p>SeatsAvailable:{{trips.car.seats_available}}</p>
 
-  {% else %}
-  <h1>You haven't created any trips yet click create trip to create or add a trip</h1>
-  {% endif %}
+  {% for trip in trips %}
+
+  <h2>Trips that you created</h2>
+  <p>Start:{{trip.start}}</p>
+  <p>Destination:{{trip.destination}}</p>
+  <p>Car:{{trip.car.car_brand}}</p>
+  <p>NumberPlate:{{trip.car.Number_plate}}</p>
+  <p>SeatsAvailable:{{trip.car.seats_available}}</p>
+
+  {% empty %}
+  <h4>You haven't created any trips yet click create trip to create or add a trip</h4>
+
+  {%endfor%}
+
 </div>
 
 {% endblock %}
