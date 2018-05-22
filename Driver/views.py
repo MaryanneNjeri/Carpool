@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -72,4 +73,13 @@ def location(request,profile_id):
             return redirect (profile,request.user.id)
     else:
         form=VenueForm()
-    return render(request,'Driver/location.html',{"form":form})    
+    class Media:
+        if hasattr(settings, 'GOOGLE_MAPS_API_KEY') and settings.GOOGLE_MAPS_API_KEY:
+            css = {
+                'all': ('css/admin/location_picker.css',),
+            }
+            js = (
+                'https://maps.googleapis.com/maps/api/js?key={}'.format(settings.GOOGLE_MAPS_API_KEY),
+                'js/admin/location_picker.js',
+            )    
+    return render(request,'Driver/location.html',{"form":form,"current_profile":current_profile})
