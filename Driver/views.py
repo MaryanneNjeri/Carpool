@@ -37,7 +37,7 @@ def landing (request):
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     trips=Driver.objects.filter(user=current_profile)
-
+    venues=Venue.objects.filter(user)
 
     return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips})
 def car(request,profile_id):
@@ -69,17 +69,11 @@ def location(request,profile_id):
     form=VenueForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            venue=form.save(commit=False)
+            venue.user=current_profile
+            venue.save()
             return redirect (profile,request.user.id)
     else:
         form=VenueForm()
-    class Media:
-        if hasattr(settings, 'GOOGLE_MAPS_API_KEY') and settings.GOOGLE_MAPS_API_KEY:
-            css = {
-                'all': ('css/admin/location_picker.css',),
-            }
-            js = (
-                'https://maps.googleapis.com/maps/api/js?key={}'.format(settings.GOOGLE_MAPS_API_KEY),
-                'js/admin/location_picker.js',
-            )    
+
     return render(request,'Driver/location.html',{"form":form,"current_profile":current_profile})
