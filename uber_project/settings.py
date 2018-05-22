@@ -125,3 +125,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+GOOGLE_MAPS_API_KEY='AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k'

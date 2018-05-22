@@ -44,7 +44,7 @@ class Driver(models.Model):
     destination=models.CharField(max_length=30)
     user=models.ForeignKey(Profile,null=True)
     car=models.ForeignKey(Car,null=True)
-class Location(models.Model):
+class Venue(models.Model):
     name=models.CharField(max_length=255)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
