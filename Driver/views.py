@@ -4,10 +4,10 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm,DriverForm,CarForm,VenueForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile,Car,Driver
+from .models import Profile,Car,Driver,Venue
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
-from django.conf import settings
+import requests
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -37,9 +37,12 @@ def landing (request):
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     trips=Driver.objects.filter(user=current_profile)
-    venues=Venue.objects.filter(user)
+    venues=Venue.objects.filter(user=current_profile)
+    ip_address = request.META.get('HTTP_X_FORWARDED_FOR', '')
+    response=requests.get('http://freegeoip.net/json/%s' % ip_address)
+    geodata= response.json()
 
-    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips})
+    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"venues":venues,'latitude':geodata['latitude'],'longitude': geodata['longitude'],'api_key':'AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k'})
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     form=CarForm(request.POST)
