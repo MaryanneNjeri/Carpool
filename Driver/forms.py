@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile,Driver,Car
+from .models import Profile,Driver,Car,Venue
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 '''
@@ -26,3 +26,7 @@ class CarForm(forms.ModelForm):
     class Meta:
         model=Car
         fields=['car_brand','seats_available','Number_plate']
+class VenueForm(forms.ModelForm):
+    class Meta:
+        model=Venue
+        fields=['name','latitude','longitude']
