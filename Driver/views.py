@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm,DriverForm,CarForm
+from .forms import SignUpForm,DriverForm,CarForm,VenueForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver
 from django.core.exceptions import ObjectDoesNotExist
@@ -63,3 +63,13 @@ def trip(request,profile_id):
     else:
         form=DriverForm()
     return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
+def location(request,profile_id):
+    current_profile=Profile.objects.get(id=profile_id)
+    form=VenueForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect (profile,request.user.id)
+    else:
+        form=VenueForm()
+    return render(request,'Driver/location.html',{"form":form})    
