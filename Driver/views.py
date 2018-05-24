@@ -38,11 +38,16 @@ def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     trips=Driver.objects.filter(user=current_profile)
     venues=Venue.objects.filter(user=current_profile)
-    ip_address = request.META.get('HTTP_X_FORWARDED_FOR', '')
-    response=requests.get('http://freegeoip.net/json/%s' % ip_address)
-    geodata= response.json()
+    if request.method == 'POST':
+        if form.is_valid():
+            venue=form.save(commit=False)
+            venue.user=current_profile
+            venue.save()
+            return redirect (profile,request.user.id)
+    else:
+        form=VenueForm()
 
-    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"venues":venues,'latitude':geodata['latitude'],'longitude': geodata['longitude'],'api_key':'AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k'})
+    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form})
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     form=CarForm(request.POST)

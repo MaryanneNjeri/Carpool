@@ -6,7 +6,8 @@
 {{block.super}}
 
 {% bootstrap_css %}
-<link rel="stylesheet" href="{% static 'css/landing.css'%}">
+<link rel="stylesheet" href="{% static 'css/admin/location_picker.css'%}">
+
 {% endblock %}
 
 {% block content %}
@@ -54,23 +55,75 @@
     {% endfor %}
 </div>
 <hr>
-<div class="container">
-  <iframe width="600"
-          height="450"
-          frameborder="0"
-          style="border:0"
-          src="https://www.google.com/maps/embed/v1/view?center={{ latitude }},{{ longitude }}&zoom=8&key={{ api_key }}"
-          allowfullscreen></iframe>
-</div>
 
+  <div id="map">
+  hello</div>
+  <div id="form">
+    <form  action="{%url 'Location' current_profile.id %}" method="post" enctype="multipart/form-data">
+       {%csrf_token%}
+
+       {% bootstrap_form form%}
+       <button type="submit" class="btn btn-warning"><a href="#" style="color:white;">Save</a></button
+     </form>
+  </div>
+  <div id="message">Location saved</div>
+
+
+<hr>
 {% endblock %}
 {% block scripts %}
 
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-       {% bootstrap_javascript %}
-           <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
-           <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k&callback=initMap"
-           'https://maps.googleapis.com/maps/api/js?key={}'.format(settings.GOOGLE_MAPS_API_KEY),
-                'js/admin/location_picker.js',
-   type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% bootstrap_javascript %}
+
+<!--We create a js function called the map that calls the initMap()-->
+<script>
+// we declare the following as global variables
+var map;
+var marker;
+var infowindow;
+var messagewindow
+      function initMap() {
+        //location of Nairobi is stored in a varibale
+        var myLatLng = {lat:-1.28333,lng:36.81667}
+        var mombasa={lat:-1.3007,lng:36.7849}
+        map = new google.maps.Map(document.getElementById('map'),{
+          center: myLatLng,
+          zoom: 13
+        });
+        // the marker is positioned at Nairobi
+        //the infowindow retrives the form element when clicking a marker
+        var marker = new google.maps.Marker({position: myLatLng, map:map})
+        var marker = new google.maps.Marker({position: mombasa, map:map})
+        infowindow =new google.maps.InfoWindow({
+          content:document.getElementById('form')
+        })
+        // retrives the message element on saving the info window
+        messagewindow=new google.maps.InfoWindow({
+          content:document.getElementById('message')
+        })
+        //we assign a click listener  with the addListener that creates a marker when the user clicks the map
+        google.maps.event.addListener(map,'click',function(event){
+          marker=new google.maps.Marker({
+            position:event.latLng,
+            map:map
+          });
+          google.maps.event.addListener(marker,'click',function(){
+            infowindow.open(map,marker);
+          });
+        });
+      }
+      function saveData(){
+        var name = escape(document.getElementById('name').value);
+        var address=escape(document)
+      }
+
+    </script>
+    <!--we load the api from the specified api, the async attribute allows the page to
+    load as the api loads the call back paramater executes the initMap() function that specifies the latitude and longitude of where the map will
+    be centered
+  -->
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k&callback=initMap"></script>
+
       {% endblock %}

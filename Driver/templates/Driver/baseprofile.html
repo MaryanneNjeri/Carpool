@@ -9,9 +9,25 @@
    {% bootstrap_css %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+          height:  400px;
+          width:600px;
+          margin-left: 100px;
+          border: 1px solid #eee;
 
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+          height: 50%;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
   {% endblock %}
-{{ form.media }}
+
 </head>
 
 <body>
@@ -27,6 +43,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
    {% bootstrap_javascript %}
+
    {% endblock %}
  </body>
  </html>
