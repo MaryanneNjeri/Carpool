@@ -7,7 +7,12 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver,Venue
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
+from django.core.serializers import serialize
+import json
 import requests
+
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -33,11 +38,13 @@ def landing (request):
     title='welcome driver'
     profile=Profile.objects.get(user=request.user)
     return render (request,'Driver/landing.html',{"title":title,"profile":profile})
-
+'''
+django has framework that transaltes django models into other formats, by specifying the formart and what should be serialized
+'''
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     trips=Driver.objects.filter(user=current_profile)
-    venues=Venue.objects.filter(user=current_profile)
+
     if request.method == 'POST':
         if form.is_valid():
             venue=form.save(commit=False)
@@ -46,8 +53,11 @@ def profile(request,profile_id):
             return redirect (profile,request.user.id)
     else:
         form=VenueForm()
-
-    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form})
+    spots=list(Venue.objects.filter(user=current_profile))
+    coords = {"1":1,"2":2}
+    coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
+    spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
+    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form,"coords_json":coords_json,"spots_json":spots_json})
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     form=CarForm(request.POST)

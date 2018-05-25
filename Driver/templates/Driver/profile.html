@@ -63,7 +63,7 @@
        {%csrf_token%}
 
        {% bootstrap_form form%}
-       <button type="submit" class="btn btn-warning"><a href="#" style="color:white;">Save</a></button
+       <button type="submit" class="btn btn-warning"><a href="#" style="color:white;">Save</a></button>
      </form>
   </div>
   <div id="message">Location saved</div>
@@ -82,41 +82,61 @@
 var map;
 var marker;
 var infowindow;
-var messagewindow
+var messagewindow;
+var marker1;
+var  $lat;
+var  $lon;
+
       function initMap() {
         //location of Nairobi is stored in a varibale
-        var myLatLng = {lat:-1.28333,lng:36.81667}
-        var mombasa={lat:-1.3007,lng:36.7849}
+        var myLatLng = {lat:-1.28333,lng:36.81667};
+        var mombasa={lat:-1.3007,lng:36.7849};
         map = new google.maps.Map(document.getElementById('map'),{
           center: myLatLng,
           zoom: 13
         });
         // the marker is positioned at Nairobi
         //the infowindow retrives the form element when clicking a marker
-        var marker = new google.maps.Marker({position: myLatLng, map:map})
-        var marker = new google.maps.Marker({position: mombasa, map:map})
+        marker1 = new google.maps.Marker({position: myLatLng, map:map,})
+        marker1 = new google.maps.Marker({position: mombasa, map:map})
+
         infowindow =new google.maps.InfoWindow({
           content:document.getElementById('form')
-        })
+        });
         // retrives the message element on saving the info window
         messagewindow=new google.maps.InfoWindow({
           content:document.getElementById('message')
-        })
+        });
         //we assign a click listener  with the addListener that creates a marker when the user clicks the map
         google.maps.event.addListener(map,'click',function(event){
+
           marker=new google.maps.Marker({
             position:event.latLng,
             map:map
           });
           google.maps.event.addListener(marker,'click',function(){
             infowindow.open(map,marker);
+
           });
         });
+        var spots=JSON.parse('{{spots_json|safe}}');
+        console.log(spots);
+        for(var i = 0;i<spots.length; i++){
+          console.log('hi');
+          var lat=parseFloat(spots[i].fields.latitude)
+          var lng=parseFloat(spots[i].fields.longitude)
+          coords=[lat,lng]
+          console.log(coords);
+          var LatLng=new google.maps.LatLng(coords[0],coords[1]);
+          var marker =new google.maps.Marker({
+            position:LatLng,
+            map:map
+          });
+        }
       }
-      function saveData(){
-        var name = escape(document.getElementById('name').value);
-        var address=escape(document)
-      }
+
+
+
 
     </script>
     <!--we load the api from the specified api, the async attribute allows the page to
