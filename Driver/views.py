@@ -4,7 +4,7 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile,Car,Driver,Venue
+from .models import Profile,Car,Driver,Venue,Passenger
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder

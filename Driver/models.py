@@ -62,3 +62,4 @@ class Passenger(models.Model):
     Reviews=models.CharField(max_length=40)
     where_are_you=models.ForeignKey(Venue,null=True)
     user=models.ForeignKey(Profile,null=True)
+    Phone_number=models.CharField(max_length=40,null=True)
