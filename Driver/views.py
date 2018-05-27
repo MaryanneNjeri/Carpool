@@ -95,13 +95,27 @@ def trip(request,profile_id):
     else:
         form=DriverForm()
     return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
-
+'''
+A view function that displays the passengers profile
+'''
 def passenger(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
 
 
     return render(request,'Driver/passenger.html',{"current_profile":current_profile})
+'''
+a view function that displays the search results for the location
+'''
 def search_location(request):
     search_term=request.GET.get("location")
     searched_location=Venue.search(search_term)
-    return render (request,'main/search.html',{"searched_location":searched_location})
+    return render (request,'Driver/search.html',{"searched_location":searched_location})
+'''
+a view function that displays the pick up point then directions to that point
+'''
+def location_point(request,location_id):
+    spots=list(Venue.objects.get(id=location_id))
+    coords = {"1":1,"2":2}
+    coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
+    spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
+    return render (request,'Driver/location.html',{"coords_json":coords_json,"spots_json":spots_json})

@@ -52,7 +52,7 @@
   hello</div>
   <div id="form">
 
-    <form  action="{%url 'Location' current_profile.id %}" onsubmit="return closeSelf(this);"method="post" enctype="multipart/form-data">
+    <form  action="#" onsubmit="return closeSelf(this);"method="post" enctype="multipart/form-data">
        {%csrf_token%}
 
        {% bootstrap_form form%}
