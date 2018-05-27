@@ -10,7 +10,8 @@ urlpatterns=[
     url(r'^profile/(\d+)',views.profile,name='Profile'),
     url(r'^trip/(\d+)',views.trip,name='Trip'),
     url(r'^car/(\d+)',views.car,name='Car'),
-    url(r'^passenger/(\d+)',views.passenger,name='Passenger')
+    url(r'^passenger/(\d+)',views.passenger,name='Passenger'),
+    url(r'^search/',views.search,name='Search')
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
