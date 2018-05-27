@@ -59,7 +59,7 @@ class Venue(models.Model):
 class Passenger(models.Model):
     name=models.CharField(max_length=40)
     national_id=models.CharField(max_length=40)
-    Reviews=models.CharField(max_length=40)
+    Reviews=models.CharField(max_length=40,blank=True)
     where_are_you=models.ForeignKey(Venue,null=True)
     user=models.ForeignKey(Profile,null=True)
     Phone_number=models.CharField(max_length=40,null=True)

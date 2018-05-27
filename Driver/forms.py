@@ -33,4 +33,8 @@ class VenueForm(forms.ModelForm):
 class PassForm(forms.ModelForm):
     class Meta:
         model=Passenger
-        fields=['national_id','where_are_you']
+        fields=['national_id','Phone_number','where_are_you']
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model=Passenger
+        fields=['Reviews']
