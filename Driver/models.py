@@ -49,6 +49,10 @@ class Venue(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     user=models.ForeignKey(Profile,null=True)
+    @classmethod
+    def search (cls,search_term):
+        locations=cls.objects.filter(name__icontains=search_term)
+        return locations
 class Passenger(models.Model):
     name=models.CharField(max_length=40)
     national_id=models.CharField(max_length=40)
