@@ -1,0 +1,42 @@
+{%extends 'basepassenger.html'%}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block styles %}
+{{ block.super }}
+{% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/home.css'%}">
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="row">
+    {% if searched_location %}
+      <h2>Found {{ searched_location|length }} result of the location </h2>
+    {% else %}
+      <h2> Found 0 results</h2>
+    {% endif %}
+
+  </div>
+</div>
+<div class="container">
+
+
+  {% if searched_location %}
+    {% for location in searched_location %}
+
+
+    <h2>  {{location.name}}</h2>
+
+
+  </div>
+    {% endfor %}
+  {% endif %}
+
+
+
+
+{% endblock %}
+{% block scripts %}
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       {% bootstrap_javascript %}
+      {% endblock %}
