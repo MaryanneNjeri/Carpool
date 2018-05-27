@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm,DriverForm,CarForm,VenueForm
+from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassengerForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver,Venue
 from django.core.exceptions import ObjectDoesNotExist
@@ -51,6 +51,7 @@ def profile(request,profile_id):
     trips=Driver.objects.filter(user=current_profile)
 
     if request.method == 'POST':
+        form=VenueForm(request.POST)
         if form.is_valid():
             venue=form.save(commit=False)
             venue.user=current_profile
@@ -84,8 +85,18 @@ thus a driver is only allowed to put in one car
 def trip(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     car_instance=Car.objects.get(id=profile_id)
-    form=DriverForm(request.POST)
+
     if request.method == 'POST':
+        form=DriverForm(request.POST)
+        if request.method == 'POST':
+            if form.is_valid():
+                driver=form.save(commit=False)
+                driver.user=current_profile
+                driver.car=car_instance
+                driver.save()
+                return redirect(profile,request.user.id)
+        else:
+            form=DriverForm()
         if form.is_valid():
             driver=form.save(commit=False)
             driver.user=current_profile
@@ -114,9 +125,25 @@ def search_location(request):
 a view function that displays the pick up point then directions to that point
 '''
 def location_point(request,location_id):
-    
+
     spots=list(Venue.objects.filter(id=location_id))
     coords = {"1":1,"2":2}
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
     spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
     return render (request,'Driver/location.html',{"coords_json":coords_json,"spots_json":spots_json})
+'''
+a view function that enables the passenger to book a trip
+
+'''
+def book(request):
+    booking=Profile.objects.get(id=request.user.id)
+
+    if request.method == 'POST':
+        form=PassengerForm(request.POST)
+        if form.is_valid():
+            passenger=form.save(commit=False)
+            passenger.user=booking
+            passenger.save()
+            return redirect(profile,request.user.id)
+    else:
+        form=DriverForm()
