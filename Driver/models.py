@@ -57,4 +57,5 @@ class Passenger(models.Model):
     name=models.CharField(max_length=40)
     national_id=models.CharField(max_length=40)
     Reviews=models.CharField(max_length=40)
+    where_to=models.CharField(max_length=40,null=True)
     user=models.ForeignKey(Profile,null=True)

@@ -33,4 +33,4 @@ class VenueForm(forms.ModelForm):
 class PassengerForm(forms.ModelForm):
     class Meta:
         model=Passenger
-        fields=['name','national_id']
+        fields=['national_id']

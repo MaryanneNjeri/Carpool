@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,Car,Driver,Venue
+from .models import Profile,Car,Driver,Venue,Passenger
 from django.conf import settings
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
@@ -26,3 +26,4 @@ class VenueAdmin(admin.ModelAdmin):
 admin.site.register(Profile)
 admin.site.register(Car)
 admin.site.register(Driver)
+admin.site.register(Passenger)

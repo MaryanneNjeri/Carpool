@@ -141,10 +141,11 @@ def book(request):
     if request.method == 'POST':
         form=PassengerForm(request.POST)
         if form.is_valid():
-            passenger=form.save(commit=False)
-            passenger.user=booking
-            passenger.save()
-            return redirect(profile,request.user.id)
+            passenge=form.save(commit=False)
+            passenge.name=request.user.username
+            passenge.user=booking
+            passenge.save()
+            return redirect(passenger,request.user.id)
     else:
-        form=DriverForm()
+        form=PassengerForm()
     return render (request,'Driver/book.html',{"form":form})
