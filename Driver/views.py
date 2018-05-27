@@ -147,3 +147,4 @@ def book(request):
             return redirect(profile,request.user.id)
     else:
         form=DriverForm()
+    return render (request,'Driver/book.html',{"form":form})
