@@ -28,8 +28,9 @@ def signup(request):
             user.save()
             raw_password=form.cleaned_data.get('password1')
             user=authenticate(username=user.username,password=raw_password)
-        
+            return redirect (landing)
             login(request, user)
+            return redirect (landing)
 
     else:
         form=SignUpForm()
@@ -100,3 +101,7 @@ def passenger(request,profile_id):
 
 
     return render(request,'Driver/passenger.html',{"current_profile":current_profile})
+def search_location(request):
+    search_term=request.GET.get("location")
+    searched_location=Venue.search(search_term)
+    return render (request,'main/search.html',{"searched_location":searched_location})
