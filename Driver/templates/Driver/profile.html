@@ -45,9 +45,13 @@
 
 </div>
 <hr>
+<div class="container">
+  <h2>Requests Available</h2>
 
+</div>
 
-
+<hr>
+<h2 class="text-center">Set your pick up points</h2>
   <div id="map">
   hello</div>
   <div id="form">
@@ -92,7 +96,7 @@ var  $lon;
         // the marker is positioned at Nairobi
         //the infowindow retrives the form element when clicking a marker
         marker1 = new google.maps.Marker({position: myLatLng, map:map,})
-        marker1 = new google.maps.Marker({position: mombasa, map:map})
+      
 
         infowindow =new google.maps.InfoWindow({
           content:document.getElementById('form')

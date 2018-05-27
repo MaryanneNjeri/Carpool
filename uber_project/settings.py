@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'uber_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'carpool',
+        'NAME': 'pool',
         'USER':'maryanne',
         'PASSWORD':'1234@5'
     }

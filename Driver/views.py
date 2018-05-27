@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassengerForm
+from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver,Venue
 from django.core.exceptions import ObjectDoesNotExist
@@ -48,10 +48,12 @@ django has framework that transaltes django models into other formats, by specif
 
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
+    venue_set=Venue.objects.filter(user=current_profile)
     trips=Driver.objects.filter(user=current_profile)
-
+    passengers=Passenger.objects.filter(where_are_you=venue_set)
+    form=VenueForm(request.POST)
     if request.method == 'POST':
-        form=VenueForm(request.POST)
+
         if form.is_valid():
             venue=form.save(commit=False)
             venue.user=current_profile
@@ -63,7 +65,7 @@ def profile(request,profile_id):
     coords = {"1":1,"2":2}
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
     spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
-    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form,"coords_json":coords_json,"spots_json":spots_json})
+    return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form,"coords_json":coords_json,"spots_json":spots_json,"passengers":passengers})
 
 '''
 we create a view function car that saves information abouth the car
@@ -136,10 +138,11 @@ a view function that enables the passenger to book a trip
 
 '''
 def book(request):
+
     booking=Profile.objects.get(id=request.user.id)
 
     if request.method == 'POST':
-        form=PassengerForm(request.POST)
+        form=PassForm(request.POST)
         if form.is_valid():
             passenge=form.save(commit=False)
             passenge.name=request.user.username
@@ -147,5 +150,5 @@ def book(request):
             passenge.save()
             return redirect(passenger,request.user.id)
     else:
-        form=PassengerForm()
+        form=PassForm()
     return render (request,'Driver/book.html',{"form":form})

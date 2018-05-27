@@ -30,7 +30,7 @@ class VenueForm(forms.ModelForm):
     class Meta:
         model=Venue
         fields=['name','latitude','longitude']
-class PassengerForm(forms.ModelForm):
+class PassForm(forms.ModelForm):
     class Meta:
         model=Passenger
-        fields=['national_id']
+        fields=['national_id','where_are_you']
