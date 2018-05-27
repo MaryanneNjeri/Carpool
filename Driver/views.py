@@ -163,4 +163,5 @@ def review(request,passenger_id):
             form.save()
             return redirect(passenger,request.user.id)
     else:
-        form=PassForm()
+        form=ReviewForm()
+    return render (request,'Driver/review.html',{"form":form,"current_passenger":current_passenger})    
