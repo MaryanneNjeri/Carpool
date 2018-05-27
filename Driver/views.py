@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassForm
+from .forms import SignUpForm,DriverForm,CarForm,VenueForm,PassForm,ReviewForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Car,Driver,Venue,Passenger
 from django.core.exceptions import ObjectDoesNotExist
@@ -152,3 +152,15 @@ def book(request):
     else:
         form=PassForm()
     return render (request,'Driver/book.html',{"form":form})
+'''
+a view function that allows the driver to review the passenger
+'''
+def review(request,passenger_id):
+    current_passenger=Passenger.objects.get(id=passenger_id)
+    if request.method == 'POST':
+        form=ReviewForm(request.POST,instance=current_passenger)
+        if form.is_valid():
+            form.save()
+            return redirect(passenger,request.user.id)
+    else:
+        form=PassForm()
