@@ -15,6 +15,7 @@ import requests
 
 # Create your views here.
 def signup(request):
+
     if request.method == 'POST':
         form=SignUpForm(request.POST,request.FILES)
         if form.is_valid():
@@ -27,7 +28,7 @@ def signup(request):
             user.save()
             raw_password=form.cleaned_data.get('password1')
             user=authenticate(username=user.username,password=raw_password)
-            return(landing)
+        
             login(request, user)
 
     else:
@@ -38,9 +39,12 @@ def landing (request):
     title='welcome driver'
     profile=Profile.objects.get(user=request.user)
     return render (request,'Driver/landing.html',{"title":title,"profile":profile})
+
+
 '''
 django has framework that transaltes django models into other formats, by specifying the formart and what should be serialized
 '''
+
 def profile(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     trips=Driver.objects.filter(user=current_profile)
@@ -58,6 +62,10 @@ def profile(request,profile_id):
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
     spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
     return render(request,'Driver/profile.html',{"current_profile":current_profile,"trips":trips,"form":form,"coords_json":coords_json,"spots_json":spots_json})
+
+'''
+we create a view function car that saves information abouth the car
+'''
 def car(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     form=CarForm(request.POST)
@@ -68,6 +76,10 @@ def car(request,profile_id):
     else:
         form=CarForm()
     return render(request,'Driver/car.html',{"form":form,"current_profile":current_profile})
+'''
+a view function that saves the trip based on the car that the current driver has saved
+thus a driver is only allowed to put in one car
+'''
 def trip(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
     car_instance=Car.objects.get(id=profile_id)
@@ -82,16 +94,9 @@ def trip(request,profile_id):
     else:
         form=DriverForm()
     return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
-def location(request,profile_id):
-    current_profile=Profile.objects.get(id=profile_id)
-    form=VenueForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
-            venue=form.save(commit=False)
-            venue.user=current_profile
-            venue.save()
-            return redirect (profile,request.user.id)
-    else:
-        form=VenueForm()
 
-    return render(request,'Driver/location.html',{"form":form,"current_profile":current_profile})
+def passenger(request,profile_id):
+    current_profile=Profile.objects.get(id=profile_id)
+
+
+    return render(request,'Driver/passenger.html',{"current_profile":current_profile})

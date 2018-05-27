@@ -45,28 +45,22 @@
 
 </div>
 <hr>
-<div class="container">
-  {%for venue in venues %}
-  <p>Name:{{venue.name}}</p>
-  <p>Latitude:{{venue.latitude}}</p>
-  <p>Longitude:{{venue.longitude}}</p>
-  {% empty %}
-  <h3>Set up a pick up location by clicking the on the navbar<h4>
-    {% endfor %}
-</div>
-<hr>
+
+
 
   <div id="map">
   hello</div>
   <div id="form">
-    <form  action="{%url 'Location' current_profile.id %}" method="post" enctype="multipart/form-data">
+
+    <form  action="{%url 'Location' current_profile.id %}" onsubmit="return closeSelf(this);"method="post" enctype="multipart/form-data">
        {%csrf_token%}
 
        {% bootstrap_form form%}
        <button type="submit" class="btn btn-warning"><a href="#" style="color:white;">Save</a></button>
      </form>
   </div>
-  <div id="message">Location saved</div>
+
+  <div id="message"></div>
 
 
 <hr>
@@ -106,6 +100,7 @@ var  $lon;
         // retrives the message element on saving the info window
         messagewindow=new google.maps.InfoWindow({
           content:document.getElementById('message')
+
         });
         //we assign a click listener  with the addListener that creates a marker when the user clicks the map
         google.maps.event.addListener(map,'click',function(event){
@@ -118,14 +113,21 @@ var  $lon;
             infowindow.open(map,marker);
 
           });
+
         });
+
+
+        // we create a variable called spots that store the spots that we passed from the view function
         var spots=JSON.parse('{{spots_json|safe}}');
         console.log(spots);
         for(var i = 0;i<spots.length; i++){
-          console.log('hi');
+          console.log('yess its working');
+          //we store the lat and long in the variables
           var lat=parseFloat(spots[i].fields.latitude)
           var lng=parseFloat(spots[i].fields.longitude)
+          //Assign them positions lat being index 0
           coords=[lat,lng]
+          //we log them to the console to check if the function is working
           console.log(coords);
           var LatLng=new google.maps.LatLng(coords[0],coords[1]);
           var marker =new google.maps.Marker({
