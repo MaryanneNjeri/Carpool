@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'basepassenger.html'%}
 {% load bootstrap3 %}
 {% load static %}
 
@@ -6,15 +6,88 @@
 {{block.super}}
 
 {% bootstrap_css %}
-<link rel="stylesheet" href="{% static 'css/landing.css'%}">
+<link rel="stylesheet" href="#">
 {% endblock %}
 
 {% block content %}
+<div class="container">
+<h1>Hello</h1>
+<div id="map">
+</div>
+
+
+</div>
 {% endblock %}
 {% block scripts %}
 
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
        {% bootstrap_javascript %}
            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+           <script>
+           // we declare the following as global variables
+           var map;
+           var marker;
+           var infowindow;
+
+           var marker1;
+           var  $lat;
+           var  $lon;
+
+                 function initMap() {
+                   var myLatLng = {lat:-1.28333,lng:36.81667};
+                   var mombasa={lat:-1.3007,lng:36.7849};
+                   map = new google.maps.Map(document.getElementById('map'),{
+                     center: myLatLng,
+                     zoom: 13
+                   });
+                   // we create a variable called spots that store the spots that we passed from the view function
+                   var spots=JSON.parse('{{spots_json|safe}}');
+                   console.log(spots);
+                   for(var i = 0;i<spots.length; i++){
+                     console.log('yess its working');
+                     //we store the lat and long in the variables
+                     var lat=parseFloat(spots[i].fields.latitude)
+                     var lng=parseFloat(spots[i].fields.longitude)
+                     var name=spots[i].fields.name
+                     //Assign them positions lat being index 0
+                     coords=[lat,lng]
+                     //we log them to the console to check if the function is working
+                     console.log(coords);
+                     var LatLng=new google.maps.LatLng(coords[0],coords[1]);
+                     marker =new google.maps.Marker({
+                       position:LatLng,
+                       map:map
+                     });
+                   }
+                   var contentString='<div id="content">'+'<h4>hello</h4>'+name+'</div>'
+                   infowindow= new google.maps.InfoWindow({
+                     content:contentString
+
+                   });
+                   marker.addListener('click',function(){
+                     infowindow.open(map,marker)
+                   })
+
+
+                 }
+                var spots=JSON.parse('{{spots_json|safe}}');
+                for(var i =0;i<spots.length;i++){
+                  var name=spots[i].fields.name
+                  var user=spots[i].fields.user
+                }
+                console.log(name)
+                console.log(user)
+
+                console.log(spots)
+
+
+
+               </script>
+               <!--we load the api from the specified api, the async attribute allows the page to
+               load as the api loads the call back paramater executes the initMap() function that specifies the latitude and longitude of where the map will
+               be centered
+             -->
+               <script async defer
+                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmrKc7FjQwLm9vEtseo5LK7Z6M_1aPm5k&callback=initMap"></script>
 
       {% endblock %}

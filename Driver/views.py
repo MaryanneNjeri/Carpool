@@ -114,7 +114,8 @@ def search_location(request):
 a view function that displays the pick up point then directions to that point
 '''
 def location_point(request,location_id):
-    spots=list(Venue.objects.get(id=location_id))
+    
+    spots=list(Venue.objects.filter(id=location_id))
     coords = {"1":1,"2":2}
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
     spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
