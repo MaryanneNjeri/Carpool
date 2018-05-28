@@ -106,9 +106,9 @@ A view function that displays the passengers profile
 '''
 def passenger(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
+    trips=Passenger.objects.filter(id=profile_id)
 
-
-    return render(request,'Driver/passenger.html',{"current_profile":current_profile})
+    return render(request,'Driver/passenger.html',{"current_profile":current_profile,"trips":trips})
 '''
 a view function that displays the search results for the location
 '''

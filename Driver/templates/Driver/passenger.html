@@ -4,21 +4,39 @@
 {% block styles %}
 {% bootstrap_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="{% static 'css/profile.css'%}">
+
 {% endblock %}
 {% block content %}
+<hr>
 <div class="container">
-<h1 style="font-family: 'Raleway', sans-serif">Welcome passenger</h1>
+
+<h1 style="font-family: 'Raleway', sans-serif"></h1>
 <div class="row">
   <div class="col-md-8">
 
-      <img src="{{current_profile.profile_image.url}}" class="img-reponsive"style="width:35%;height:35%;" alt="Image">
+      <img src="{{current_profile.profile_image.url}}" class="img-reponsive"style="width:400px;height:400px;" alt="Image">
       <br>
-
+      <h3 style="font-family: 'Raleway', sans-serif">Name:{{current_profile.username}}</h3>
+      <h3 style="font-family: 'Raleway', sans-serif">Type:{{current_profile.user_type}}</h3>
+    <hr>
+    <div class="card">
+      <div class="container">
+    <h2 style="font-family: 'Raleway', sans-serif">Request for a trip</h2>
+    <ul>
+      <li><h3 style="font-family: 'Raleway', sans-serif">To request for a trip click request trip on the navbar</h3></li>
+      <li><h3 style="font-family: 'Raleway', sans-serif">To search for the pick up points available </h3></li>
+      <li><h3 style="font-family: 'Raleway', sans-serif">To get the direction search for a pick up point and get the directions</h3></li>
+    </ul>
+  </div>
+</div>
 </div>
 <div class="col-md-4">
-  <h3>Name:{{current_profile.username}}</h3>
-  <h3>Type:{{current_profile.user_type}}</h3>
+<h1 style="font-family: 'Raleway', sans-serif">Trips Made</h1>
+{%for trip in trips %}
+<h3 style="font-family: 'Raleway', sans-serif;">{{trip.where_are_you}}</h3>
+{% empty %}
+<h1 style="font-family: 'Raleway', sans-serif">You have not made any trips yet</h1>
+{%endfor%}
 </div>
 </div>
 

@@ -13,17 +13,22 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
+      <div class="card">
+
       <h3 style="font-family: 'Raleway', sans-serif;">Driver Available</h3>
     {%for venue in venues %}
-    <img src="{{venue.user.profile_image.url}}" class="img-circle"style="width:35%;height:35%;" alt="Image">
+    <img src="{{venue.user.profile_image.url}}" class="img-responsive"style="width:100%;" alt="Image">
+    <div class="con">
     <h4 style="font-family: 'Raleway', sans-serif;">Name:{{venue.user.username}}</h4>
     <h4 style="font-family: 'Raleway', sans-serif;">Sex:{{venue.user.sex}}</h4>
+    </div>
     {% empty %}
     <h4 style="font-family: 'Raleway', sans-serif; ">No current Driver available</h4>
     {% endfor %}
   </div>
-  <div class="col-md-9">
+  </div>
+  <div class="col-md-8">
     <input id="origin-input" class="controls" type="text"
           placeholder="Enter an origin location">
 
