@@ -28,22 +28,6 @@ class Profile(models.Model):
 '''
 we create a car model to save information about the car as users may have prefrences
 '''
-class Car(models.Model):
-    car_brand=models.CharField(max_length=30)
-    Number_plate=models.CharField(max_length=40)
-    seats_available=models.IntegerField(max_length=40)
-    users_car=models.ForeignKey(User,null=True)
-'''
-we create a driver model to save information of the driver and the car
-'''
-'''
-we add the car foreign key to the driver model to save that the car belongs to the specific user and also query the db is easier
-'''
-class Driver(models.Model):
-    start=models.CharField(max_length=40)
-    destination=models.CharField(max_length=30)
-    user=models.ForeignKey(Profile,null=True)
-    car=models.ForeignKey(Car,null=True)
 class Venue(models.Model):
     name=models.CharField(max_length=255)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
@@ -56,6 +40,24 @@ class Venue(models.Model):
     def search (cls,search_term):
         locations=cls.objects.filter(name__icontains=search_term)
         return locations
+class Car(models.Model):
+    car_brand=models.CharField(max_length=30)
+    Number_plate=models.CharField(max_length=40)
+    seats_available=models.IntegerField(max_length=40)
+    users_car=models.ForeignKey(User,null=True)
+    location=models.ForeignKey(Venue,null=True)
+'''
+we create a driver model to save information of the driver and the car
+'''
+'''
+we add the car foreign key to the driver model to save that the car belongs to the specific user and also query the db is easier
+'''
+class Driver(models.Model):
+    start=models.CharField(max_length=40)
+    destination=models.CharField(max_length=30)
+    user=models.ForeignKey(Profile,null=True)
+    car=models.ForeignKey(Car,null=True)
+
 class Passenger(models.Model):
     name=models.CharField(max_length=40)
     national_id=models.CharField(max_length=40)
