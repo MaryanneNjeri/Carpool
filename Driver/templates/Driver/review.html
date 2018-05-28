@@ -8,13 +8,13 @@
 {% block content %}
 <div class="container">
 
-<h1 style="font-family: 'Raleway', sans-serif;">Signup</h1>
+<h1 style="font-family: 'Raleway', sans-serif;">Write a review</h1>
 
- <form  action="{%url 'Review'current_passenger.id %}" method="post" enctype="multipart/form-data">
+ <form  action="{%url 'Review' current_passenger.id %}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
 
     {% bootstrap_form form%}
-    <input type="submit" class="btn btn-warning btn-lg" value="sign up">
+    <input type="submit" class="btn btn-warning btn-lg" value="Post">
   </form>
 
 

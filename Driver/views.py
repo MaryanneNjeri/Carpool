@@ -99,14 +99,7 @@ def trip(request,profile_id):
                 return redirect(profile,request.user.id)
         else:
             form=DriverForm()
-        if form.is_valid():
-            driver=form.save(commit=False)
-            driver.user=current_profile
-            driver.car=car_instance
-            driver.save()
-            return redirect(profile,request.user.id)
-    else:
-        form=DriverForm()
+
     return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
 '''
 A view function that displays the passengers profile
@@ -127,12 +120,14 @@ def search_location(request):
 a view function that displays the pick up point then directions to that point
 '''
 def location_point(request,location_id):
-
+    venues=Venue.objects.filter(id=location_id)
+    seats=list(Car.objects.filter(id=location_id))
     spots=list(Venue.objects.filter(id=location_id))
     coords = {"1":1,"2":2}
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
     spots_json=serializers.serialize('json',spots,cls=DjangoJSONEncoder)
-    return render (request,'Driver/location.html',{"coords_json":coords_json,"spots_json":spots_json})
+    seats_json=serializers.serialize('json',seats,cls=DjangoJSONEncoder)
+    return render (request,'Driver/location.html',{"coords_json":coords_json,"spots_json":spots_json,"venues":venues,"seats_json":seats_json})
 '''
 a view function that enables the passenger to book a trip
 
@@ -161,7 +156,7 @@ def review(request,passenger_id):
         form=ReviewForm(request.POST,instance=current_passenger)
         if form.is_valid():
             form.save()
-            return redirect(passenger,request.user.id)
+            return redirect(profile,request.user.id)
     else:
         form=ReviewForm()
-    return render (request,'Driver/review.html',{"form":form,"current_passenger":current_passenger})    
+    return render (request,'Driver/review.html',{"form":form,"current_passenger":current_passenger})

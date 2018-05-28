@@ -7,16 +7,28 @@
 
 {% bootstrap_css %}
 <link rel="stylesheet" href="#">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-<h1>Hello</h1>
-<div id="map">
+  <div class="row">
+    <div class="col-md-3">
+      <h3 style="font-family: 'Raleway', sans-serif;">Driver Available</h3>
+    {%for venue in venues %}
+    <img src="{{venue.user.profile_image.url}}" class="img-circle"style="width:35%;height:35%;" alt="Image">
+    <h4 style="font-family: 'Raleway', sans-serif;">Name:{{venue.user.username}}</h4>
+    <h4 style="font-family: 'Raleway', sans-serif;">Sex:{{venue.user.sex}}</h4>
+    {% empty %}
+    <h4 style="font-family: 'Raleway', sans-serif; ">No current Driver available</h4>
+    {% endfor %}
+  </div>
+  <div class="col-md-9">
+<div id="map"></div>
+</div>
+</div>
 </div>
 
-
-</div>
 {% endblock %}
 {% block scripts %}
 
@@ -59,7 +71,16 @@
                        map:map
                      });
                    }
-                   var contentString='<div id="content">'+'<h4>hello</h4>'+name+'</div>'
+                   var seats=JSON.parse('{{seats_json|safe}}');
+                   for(var i =0;i<seats.length;i++){
+                     var car_brand =seats[i].fields.car_brand
+                     var  Number_plate=seats[i].fields.Number_plate
+                     var number=seats[i].fields.seats_available
+
+                   }
+                   console.log(car_brand);
+
+                   var contentString='<div id="content">'+'<h4>Pick Up Point</h4>'+name+'<br>'+car_brand+'<br>'+Number_plate+'<br>'+'<p>Seats Available:</p>'+number+'</div>'
                    infowindow= new google.maps.InfoWindow({
                      content:contentString
 
@@ -79,7 +100,14 @@
                 console.log(user)
 
                 console.log(spots)
+                var seats=JSON.parse('{{seats_json|safe}}');
+                for(var i =0;i<seats.length;i++){
+                  var car_brand =seats[i].fields.car_brand
+                  var  Number_plate=seats[i].fields.Number_plate
 
+                }
+                console.log(seats);
+                console.log(car_brand);
 
 
                </script>
