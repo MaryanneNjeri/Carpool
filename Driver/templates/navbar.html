@@ -6,17 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 15px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="background-image:url(../static/Images/background3.jpg) ;height:950px;background-position:center;background-size:cover;  background-repeat: no-repeat;">
   <div class="container-fluid">
     <div class="navbar-header">
-     <a class="navbar-brand" href="{% url 'Landing' %}" style="font-family: 'Raleway', sans-serif; font-size:35px;">CarPool</a>
+     <a class="navbar-brand" href="{% url 'Landing' %}" style="font-family: 'Raleway', sans-serif; font-size:35px;color:black;">CarPool</a>
    </div>
    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{%url 'Profile' profile.id%}"style="font-family: 'Raleway', sans-serif;font-size:25px;"><span class="sr-only">(current)</span>Driver</a></li>
-        <li class=""><a href="{%url 'Passenger' profile.id %}" style="font-family: 'Raleway', sans-serif;font-size:25px;"> <span class="sr-only"></span>Passenger</a></li>
+        <li class=""><a href="{%url 'Profile' profile.id%}"style="font-family: 'Raleway', sans-serif;font-size:25px;color:black;"><span class="sr-only">(current)</span>Driver</a></li>
+        <li class=""><a href="{%url 'Passenger' profile.id %}" style="font-family: 'Raleway', sans-serif;font-size:25px;color:black;"> <span class="sr-only"></span>Passenger</a></li>
 
       </ul>
 
@@ -58,12 +98,24 @@
               </li>
 
               {% endif %}
+
             </div>
 
 
 
   </div>
+
 </div>
+<h1 class="text-center" style="font-family: 'Raleway', sans-serif;font-size:45px;">Ride sharing is now</h1>
+  <h1 class="text-center" style="font-family: 'Raleway', sans-serif;font-size:40px;">made <b>Simpler</b></h1>
+
+     <h1 class="text-center"><button class="button"style="background-color:black;"><a href="{%url 'Profile' profile.id%}"style="font-family: 'Raleway', sans-serif;font-size:30px;color:white ;text:center;"><span>Driver</span></a></button></h1>
+      <h1 class="text-center"><button class="button"style="background-color:black;"><a href="{%url 'Passenger' profile.id%}"style="font-family: 'Raleway', sans-serif;font-size:30px;color:white ;text:center;"><span>Passenger</span></a></button></h1>
+
+
+
+
+
 </nav>
 </body>
 </html>
