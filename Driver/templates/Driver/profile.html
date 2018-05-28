@@ -57,7 +57,7 @@
       <h3 style="font-family: 'Raleway', sans-serif;">Name: {{passenger.name}}</h3>
       <h3 style="font-family: 'Raleway', sans-serif;">Id no: {{passenger.national_id}}</h3>
       <h3 style="font-family: 'Raleway', sans-serif;">Phone Number:{{passenger.Phone_number}}</h3>
-      
+
     </div>
     <button type="button" class="btn btn-info"><a href="{%url 'Review' passenger.id %}" style="font-family: 'Raleway', sans-serif;color:white;">Write a review</a></button>
   </div>
@@ -74,11 +74,11 @@
   hello</div>
   <div id="form">
 
-    <form  action="#" onsubmit="return closeSelf(this);"method="post" enctype="multipart/form-data">
+    <form  action="{%url 'Profile' current_profile.id %}" method="post" enctype="multipart/form-data">
        {%csrf_token%}
 
        {% bootstrap_form form%}
-       <button type="submit" class="btn btn-warning"><a href="#" style="color:white;">Save</a></button>
+       <input type="submit" class="btn btn-warning btn-lg" value="Save">
      </form>
   </div>
 

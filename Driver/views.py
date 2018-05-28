@@ -12,6 +12,7 @@ from django.core import serializers
 from django.core.serializers import serialize
 import json
 import requests
+from django.db.models import F
 
 # Create your views here.
 def signup(request):
@@ -90,14 +91,13 @@ def trip(request,profile_id):
 
     if request.method == 'POST':
         form=DriverForm(request.POST)
-        if request.method == 'POST':
-            if form.is_valid():
-                driver=form.save(commit=False)
-                driver.user=current_profile
-                driver.car=car_instance
-                driver.save()
-                return redirect(profile,request.user.id)
-        else:
+        if form.is_valid():
+            driver=form.save(commit=False)
+            driver.user=current_profile
+            driver.car=car_instance
+            driver.save()
+            return redirect(profile,request.user.id)
+    else:
             form=DriverForm()
 
     return render(request,'Driver/trip.html',{"form":form,"current_profile":current_profile})
@@ -135,7 +135,7 @@ a view function that enables the passenger to book a trip
 def book(request):
 
     booking=Profile.objects.get(id=request.user.id)
-
+    seat= Car.objects.all()
     if request.method == 'POST':
         form=PassForm(request.POST)
         if form.is_valid():
@@ -143,9 +143,11 @@ def book(request):
             passenge.name=request.user.username
             passenge.user=booking
             passenge.save()
+            seat.seats_available=F('seats_available')-1
             return redirect(passenger,request.user.id)
     else:
         form=PassForm()
+
     return render (request,'Driver/book.html',{"form":form})
 '''
 a view function that allows the driver to review the passenger
