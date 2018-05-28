@@ -25,7 +25,7 @@ class DriverForm(forms.ModelForm):
 class CarForm(forms.ModelForm):
     class Meta:
         model=Car
-        fields=['car_brand','seats_available','Number_plate']
+        fields=['car_brand','seats_available','Number_plate','location']
 class VenueForm(forms.ModelForm):
     class Meta:
         model=Venue

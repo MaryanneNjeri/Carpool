@@ -121,7 +121,7 @@ a view function that displays the pick up point then directions to that point
 '''
 def location_point(request,location_id):
     venues=Venue.objects.filter(id=location_id)
-    seats=list(Car.objects.filter(id=location_id))
+    seats=list(Car.objects.filter(location=venues))
     spots=list(Venue.objects.filter(id=location_id))
     coords = {"1":1,"2":2}
     coords_json=json.dumps(coords,cls=DjangoJSONEncoder)
