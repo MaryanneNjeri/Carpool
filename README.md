@@ -2,10 +2,10 @@
 An app bulid using Django a python framework  
 
 - Home page
-![Screenshot](screenshot1.png)
+![Screenshot](screensho0t1.png)
 
 - Driver Profile Page
-![Screenshot](screenshot2.png)
+![Screenshot](screensho0t2.png)
 
 - Directions map
 ![Screenshot](screenshot3.png)
