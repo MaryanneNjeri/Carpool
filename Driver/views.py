@@ -87,14 +87,14 @@ thus a driver is only allowed to put in one car
 '''
 def trip(request,profile_id):
     current_profile=Profile.objects.get(id=profile_id)
-    car_instance=Car.objects.get(id=profile_id)
+    #car_instance=Car.objects.get(id=profile_id)
 
     if request.method == 'POST':
         form=DriverForm(request.POST)
         if form.is_valid():
             driver=form.save(commit=False)
             driver.user=current_profile
-            driver.car=car_instance
+            #driver.car=car_instance
             driver.save()
             return redirect(profile,request.user.id)
     else:

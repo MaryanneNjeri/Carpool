@@ -33,7 +33,7 @@
 <div class="col-md-4">
 <h1 style="font-family: 'Raleway', sans-serif">Trips Made</h1>
 {%for trip in trips %}
-<h3 style="font-family: 'Raleway', sans-serif;">{{trip.where_are_you}}</h3>
+<h3 style="font-family: 'Raleway', sans-serif;">{{trip.name}}</h3>
 {% empty %}
 <h1 style="font-family: 'Raleway', sans-serif">You have not made any trips yet</h1>
 {%endfor%}
