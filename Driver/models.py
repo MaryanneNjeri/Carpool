@@ -45,7 +45,7 @@ class Venue(models.Model):
 class Car(models.Model):
     car_brand=models.CharField(max_length=30)
     Number_plate=models.CharField(max_length=40)
-    seats_available=models.IntegerField(max_length=40)
+    seats_available=models.IntegerField()
     users_car=models.ForeignKey(User,null=True)
     location=models.ForeignKey(Venue,null=True)
     def __str__(self):

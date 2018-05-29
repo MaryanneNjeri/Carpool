@@ -24,3 +24,11 @@ class VenueTestClass(TestCase):
     # We test if the object is created
     def test_instance(self):
         self.assertTrue(isinstance(self.venue,Venue))
+class PassengerTestClass(TestCase):
+    def setUp(self):
+        user2=User(first_name="Suzan",last_name="Wanja")
+        profile1=Profile(username='Suzan',user_type='Driver',sex='Female',user=user2)
+        venue1=Venue(name="Kilimani",latitude="-1.2839",longitude="36.389",user=profile1)
+        self.passenger=Passenger(name="Terry",national_id="23456797",Reviews="Good Passenger",Phone_number="07345678901",where_are_you=venue1,user=profile1)
+    def test_instance(self):
+        self.assertTrue(isinstance(self.passenger,Passenger))
