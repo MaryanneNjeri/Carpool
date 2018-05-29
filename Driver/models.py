@@ -25,6 +25,8 @@ class Profile(models.Model):
         if created:
             Profile.objects.create(user=instance)
         instance.profile.save()
+    def delete_profile(self):
+        self.delete()
 '''
 we create a car model to save information about the car as users may have prefrences
 '''
