@@ -37,7 +37,8 @@ class Venue(models.Model):
     user=models.ForeignKey(Profile,null=True)
     def __str__(self):
         return self.name
-
+    def delete_venue(self):
+        self.save()
     @classmethod
     def search (cls,search_term):
         locations=cls.objects.filter(name__icontains=search_term)
