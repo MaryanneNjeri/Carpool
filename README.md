@@ -8,7 +8,7 @@ An app bulid using Django a python framework
 ![Screenshot](screenshoot2.png)
 
 - Directions map
-![Screenshot](screenshot3.png)
+![Screenshot](screenshoot5.png)
 
 ## Author name
 Maryanne  Njeri
